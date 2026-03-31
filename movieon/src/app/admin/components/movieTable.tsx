@@ -142,6 +142,13 @@ export default function MovieTable() {
     }
   };
 
+  const getImageSrc = (path?: string) => {
+  if (!path) return "/user-profile.svg";
+  if (path.startsWith("http")) return path;
+  if (path.startsWith("/")) return path;
+  return "/" + path; 
+};
+
   if (loading)
     return (
       <div className="flex justify-center py-10">
@@ -371,10 +378,10 @@ export default function MovieTable() {
                       <div className="flex items-center gap-4">
                         <div className="relative w-16 h-16 rounded-lg overflow-hidden">
                           <Image
-                            src={c.picture?.trim() ? c.picture :  "/user-profile.svg"}
-                            alt={c.actor || "Actor"}
-                            fill
-                            className="object-cover"
+                           src={getImageSrc(c.picture)}
+                           alt={c.actor || "Actor"}
+                           fill
+                           className="object-cover"
                           />
                         </div>
 

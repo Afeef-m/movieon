@@ -72,18 +72,16 @@
           "movieId": "42e2",
           "days": [
             {
-              "date": "2025-12-17",
+              "date": "2026-04-04",
               "showtimes": [
-                "10:00AM",
-                "7:30AM",
-                "9:15PM"
+                "5:00PM",
+                "9:30PM"
               ]
             },
             {
-              "date": "2025-12-19",
+              "date": "2026-04-30",
               "showtimes": [
-                "4:00PM",
-                "9:45AM"
+                "11:00PM"
               ]
             }
           ],
@@ -94,16 +92,26 @@
                 "10:00AM",
                 "11:30AM",
                 "4:00PM",
+                "5:00PM",
                 "7:30AM",
                 "8:30AM",
                 "9:15PM",
+                "9:30PM",
                 "9:45AM"
               ],
-              "seats": {}
+              "seats": {
+                "2026-04-04": {
+                  "9:30PM": [
+                    "I5",
+                    "I6"
+                  ]
+                }
+              }
             },
             {
               "screen": 2,
               "showtimes": [
+                "11:00PM",
                 "11:30AM"
               ],
               "seats": {}
@@ -187,18 +195,21 @@
           "movieTitle": "33a9",
           "days": [
             {
-              "date": "2025-12-18",
+              "date": "2026-04-09",
               "showtimes": [
-                "3:45PM",
-                "8:30AM",
-                "8:30PM"
+                "10:00PM"
               ]
             },
             {
-              "date": "2025-12-19",
+              "date": "2026-04-30",
               "showtimes": [
-                "4:45PM",
-                "8:30AM"
+                "12:00PM"
+              ]
+            },
+            {
+              "date": "2026-04-11",
+              "showtimes": [
+                "7:30PM"
               ]
             }
           ],
@@ -206,6 +217,8 @@
             {
               "screen": 1,
               "showtimes": [
+                "10:00PM",
+                "12:00PM",
                 "3:45PM",
                 "4:45PM",
                 "8:30AM",
@@ -217,8 +230,21 @@
                     "J6",
                     "J7"
                   ]
+                },
+                "2026-04-30": {
+                  "12:00PM": [
+                    "C3",
+                    "C4"
+                  ]
                 }
               }
+            },
+            {
+              "screen": 2,
+              "showtimes": [
+                "7:30PM"
+              ],
+              "seats": {}
             }
           ]
         }
@@ -576,7 +602,23 @@
       "trailer": "https://www.youtube.com/embed/zSWdZVtXT7E",
       "status": "NOW_SHOWING",
       "id": "33a9",
-      "cast": []
+      "cast": [
+        {
+          "actor": "Matthew McConaughey",
+          "character": "Cooper",
+          "picture": "/cast/ints-1.jpg"
+        },
+        {
+          "actor": "Anne Hathaway",
+          "character": "Brand",
+          "picture": "cast/ints-2.webp"
+        },
+        {
+          "actor": "Jessica Chastain",
+          "character": "Murph",
+          "picture": "cast/ints-3.webp"
+        }
+      ]
     },
     {
       "title": "Oppenheimer",
@@ -601,7 +643,12 @@
         {
           "actor": "Cillian Murphy",
           "character": "Oppenheimer",
-          "picture": ""
+          "picture": "/cast/opp-1.jpg"
+        },
+        {
+          "actor": " Robert Downey Jr.",
+          "character": "Lewis Strauss",
+          "picture": "cast/opp-3.webp"
         }
       ]
     },
@@ -646,301 +693,6 @@
       "id": "9390"
     }
   ],
-  "bookings": [
-    {
-      "id": "bkg_1765950122910",
-      "bookingId": "bkg_1765950122910",
-      "ticketId": "tkt_1765950122910",
-      "userId": "aa26",
-      "movieId": "42e2",
-      "theaterId": "f903",
-      "screen": 2,
-      "date": "2025-12-17",
-      "time": "2:00PM",
-      "seats": [
-        "J5",
-        "J6"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_RsZDBGnmZa4A6F",
-      "readableDateTime": "17 Dec 2025, 11:12 am",
-      "status": "BOOKED"
-    },
-    {
-      "id": "bkg_1765950420379",
-      "bookingId": "bkg_1765950420379",
-      "ticketId": "tkt_1765950420379",
-      "userId": "aa26",
-      "movieId": "719d",
-      "theaterId": "f903",
-      "screen": 1,
-      "date": "2025-12-17",
-      "time": "10:00PM",
-      "seats": [
-        "J3",
-        "J4"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_RsZIPXGktadBUp",
-      "readableDateTime": "17 Dec 2025, 11:17 am",
-      "status": "CANCELLED",
-      "updatedAt": "2025-12-17T08:52:24.368Z"
-    },
-    {
-      "id": "bkg_1765950647136",
-      "bookingId": "bkg_1765950647136",
-      "ticketId": "tkt_1765950647136",
-      "userId": "6f91",
-      "movieId": "33a9",
-      "theaterId": "f903",
-      "screen": 1,
-      "date": "2025-12-19",
-      "time": "3:00PM",
-      "seats": [
-        "J7",
-        "J8"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_RsZMNQ4OFCuDO1",
-      "readableDateTime": "17 Dec 2025, 11:20 am",
-      "status": "BOOKED"
-    },
-    {
-      "id": "bkg_1765950835557",
-      "bookingId": "bkg_1765950835557",
-      "ticketId": "tkt_1765950835557",
-      "userId": "6f91",
-      "movieId": "33a9",
-      "theaterId": "4677",
-      "screen": 1,
-      "date": "2025-12-17",
-      "time": "5:30PM",
-      "seats": [
-        "H1",
-        "H2"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_RsZPie10Db3753",
-      "readableDateTime": "17 Dec 2025, 11:23 am",
-      "status": "BOOKED",
-      "updatedAt": "2025-12-18T05:48:32.856Z"
-    },
-    {
-      "id": "bkg_1765952702998",
-      "bookingId": "bkg_1765952702998",
-      "ticketId": "tkt_1765952702998",
-      "userId": "aa26",
-      "movieId": "33a9",
-      "theaterId": "2993",
-      "screen": 1,
-      "date": "2025-12-19",
-      "time": "4:45PM",
-      "seats": [
-        "J6",
-        "J7"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_RsZwcQXgAO5H60",
-      "readableDateTime": "17 Dec 2025, 11:55 am",
-      "status": "COMPLETED",
-      "updatedAt": "2025-12-19T09:16:50.526Z"
-    },
-    {
-      "id": "bkg_1765987830564",
-      "bookingId": "bkg_1765987830564",
-      "ticketId": "tkt_1765987830564",
-      "userId": "aa26",
-      "movieId": "42e2",
-      "theaterId": "4677",
-      "screen": 1,
-      "date": "2025-12-19",
-      "time": "3:00PM",
-      "seats": [
-        "I9",
-        "I10"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_Rsjv4DydgJMSXM",
-      "readableDateTime": "17 Dec 2025, 9:40 pm",
-      "status": "BOOKED"
-    },
-    {
-      "id": "bkg_1766132288381",
-      "bookingId": "bkg_1766132288381",
-      "ticketId": "tkt_1766132288381",
-      "userId": "aa26",
-      "movieId": "719d",
-      "theaterId": "4677",
-      "screen": 1,
-      "date": "2025-12-19",
-      "time": "7:45PM",
-      "seats": [
-        "K8",
-        "K7"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_RtOw78uCfrSVTp",
-      "readableDateTime": "19 Dec 2025, 1:48 pm",
-      "status": "BOOKED"
-    }
-  ],
-  "tickets": [
-    {
-      "id": "tkt_1765950122910",
-      "bookingId": "bkg_1765950122910",
-      "ticketId": "tkt_1765950122910",
-      "movieId": "42e2",
-      "theaterId": "f903",
-      "screen": 2,
-      "date": "2025-12-17",
-      "time": "2:00PM",
-      "seats": [
-        "J5",
-        "J6"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_RsZDBGnmZa4A6F",
-      "userId": "aa26",
-      "createdAt": "2025-12-17T05:42:02.910Z",
-      "moviePoster": "/images/oppenheimer poster.jpg",
-      "movieTitle": "Oppenheimer",
-      "language": "English",
-      "status": "BOOKED"
-    },
-    {
-      "id": "tkt_1765950420379",
-      "bookingId": "bkg_1765950420379",
-      "ticketId": "tkt_1765950420379",
-      "movieId": "719d",
-      "theaterId": "f903",
-      "screen": 1,
-      "date": "2025-12-17",
-      "time": "10:00PM",
-      "seats": [
-        "J3",
-        "J4"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_RsZIPXGktadBUp",
-      "userId": "aa26",
-      "createdAt": "2025-12-17T05:47:00.379Z",
-      "moviePoster": "/images/f1 poster.jpg",
-      "movieTitle": "F1: The Movie",
-      "language": "English",
-      "status": "CANCELLED",
-      "updatedAt": "2025-12-17T08:52:24.423Z"
-    },
-    {
-      "id": "tkt_1765950647136",
-      "bookingId": "bkg_1765950647136",
-      "ticketId": "tkt_1765950647136",
-      "movieId": "33a9",
-      "theaterId": "f903",
-      "screen": 1,
-      "date": "2025-12-19",
-      "time": "3:00PM",
-      "seats": [
-        "J7",
-        "J8"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_RsZMNQ4OFCuDO1",
-      "userId": "6f91",
-      "createdAt": "2025-12-17T05:50:47.136Z",
-      "moviePoster": "/images/intesteller poster.jpg",
-      "movieTitle": "Interstellar",
-      "language": "English",
-      "status": "BOOKED"
-    },
-    {
-      "id": "tkt_1765950835557",
-      "bookingId": "bkg_1765950835557",
-      "ticketId": "tkt_1765950835557",
-      "movieId": "33a9",
-      "theaterId": "4677",
-      "screen": 1,
-      "date": "2025-12-17",
-      "time": "5:30PM",
-      "seats": [
-        "H1",
-        "H2"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_RsZPie10Db3753",
-      "userId": "6f91",
-      "createdAt": "2025-12-17T05:53:55.557Z",
-      "moviePoster": "/images/intesteller poster.jpg",
-      "movieTitle": "Interstellar",
-      "language": "English",
-      "status": "BOOKED",
-      "updatedAt": "2025-12-18T05:48:32.880Z"
-    },
-    {
-      "id": "tkt_1765952702998",
-      "bookingId": "bkg_1765952702998",
-      "ticketId": "tkt_1765952702998",
-      "movieId": "33a9",
-      "theaterId": "2993",
-      "screen": 1,
-      "date": "2025-12-19",
-      "time": "4:45PM",
-      "seats": [
-        "J6",
-        "J7"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_RsZwcQXgAO5H60",
-      "userId": "aa26",
-      "createdAt": "2025-12-17T06:25:02.998Z",
-      "moviePoster": "/images/intesteller poster.jpg",
-      "movieTitle": "Interstellar",
-      "language": "English",
-      "status": "COMPLETED",
-      "updatedAt": "2025-12-19T09:16:50.600Z"
-    },
-    {
-      "id": "tkt_1765987830564",
-      "bookingId": "bkg_1765987830564",
-      "ticketId": "tkt_1765987830564",
-      "movieId": "42e2",
-      "theaterId": "4677",
-      "screen": 1,
-      "date": "2025-12-19",
-      "time": "3:00PM",
-      "seats": [
-        "I9",
-        "I10"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_Rsjv4DydgJMSXM",
-      "userId": "aa26",
-      "createdAt": "2025-12-17T16:10:30.564Z",
-      "moviePoster": "/images/oppenheimer poster.jpg",
-      "movieTitle": "Oppenheimer",
-      "language": "English",
-      "status": "BOOKED"
-    },
-    {
-      "id": "tkt_1766132288381",
-      "bookingId": "bkg_1766132288381",
-      "ticketId": "tkt_1766132288381",
-      "movieId": "719d",
-      "theaterId": "4677",
-      "screen": 1,
-      "date": "2025-12-19",
-      "time": "7:45PM",
-      "seats": [
-        "K8",
-        "K7"
-      ],
-      "totalPrice": 340,
-      "paymentId": "pay_RtOw78uCfrSVTp",
-      "userId": "aa26",
-      "createdAt": "2025-12-19T08:18:08.382Z",
-      "moviePoster": "/images/f1 poster.jpg",
-      "movieTitle": "F1: The Movie",
-      "language": "English",
-      "status": "BOOKED"
-    }
-  ]
+  "bookings": [],
+  "tickets": []
 }

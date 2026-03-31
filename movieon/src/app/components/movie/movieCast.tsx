@@ -6,11 +6,16 @@ interface CastListProps {
 }
 
 export default function CastList({ cast = [] }: CastListProps) {
+  const getImageSrc = (path?: string) => {
+    if (!path) return "/user-profile.svg";
+    if (path.startsWith("http")) return path;
+    if (path.startsWith("/")) return path;
+    return "/" + path; // auto-fix bad data
+  };
+
   return (
     <section className="w-full py-12 mt-0">
-      <h2 className="text-3xl font-bold mb-8 text-white px-6 md:px-16">
-        Cast
-      </h2>
+      <h2 className="text-3xl font-bold mb-8 text-white px-6 md:px-16">Cast</h2>
 
       <div className="px-6 md:px-16">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
@@ -33,7 +38,7 @@ export default function CastList({ cast = [] }: CastListProps) {
             >
               <div className="w-28 h-28 rounded-full overflow-hidden mb-4">
                 <Image
-                  src={person.picture?.trim() ? person.picture : "/user-profile.svg"}
+                  src={getImageSrc(person.picture)}
                   alt={person.actor}
                   width={112}
                   height={112}
