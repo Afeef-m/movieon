@@ -156,7 +156,7 @@ const moviesToShow = isFiltering ? filteredMovies : nowShowing;
               </h2>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+              <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
                 {filteredMovies.map((movie) => (
                   <MovieCard key={movie.id} movie={movie} />
                 ))}
@@ -174,17 +174,7 @@ const moviesToShow = isFiltering ? filteredMovies : nowShowing;
                 </h2>
               </div>
 
-              <div
-                className="
-    grid 
-    grid-cols-2 
-    sm:grid-cols-3 
-    md:grid-cols-4 
-    lg:grid-cols-5 
-    gap-6
-    place-items-stretch
-  "
-              >
+             <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth scrollbar-hide">
                 {upcoming.map((movie) => (
                   <MovieCard key={movie.id} movie={movie} />
                 ))}
