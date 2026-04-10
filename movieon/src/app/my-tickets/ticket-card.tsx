@@ -16,7 +16,7 @@ export default function TicketCard({ ticket }: Props) {
 
  const handleCancel = async () => {
   try {
-    await fetch("/bookings/cancel", {
+    await fetch("/api/bookings/cancel", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ bookingId: ticket.bookingId }),

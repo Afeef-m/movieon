@@ -352,6 +352,12 @@
                     "H1",
                     "H2"
                   ]
+                },
+                "2026-05-02": {
+                  "4:00PM": [
+                    "I6",
+                    "I5"
+                  ]
                 }
               }
             }
@@ -718,6 +724,88 @@
       "id": "9390"
     }
   ],
-  "bookings": [],
-  "tickets": []
+  "bookings": [
+    {
+      "id": "bkg_1775811795431",
+      "bookingId": "bkg_1775811795431",
+      "ticketId": "tkt_1775811795431",
+      "userId": "aa26",
+      "movieId": "42e2",
+      "theaterId": "4677",
+      "screen": 1,
+      "date": "2026-04-30",
+      "time": "4:30PM",
+      "seats": [
+        "J6"
+      ],
+      "totalPrice": 170,
+      "paymentId": "pay_SbjXSIkTiZVm7z",
+      "readableDateTime": "10 Apr 2026, 2:33 pm",
+      "status": "CANCELLED"
+    },
+    {
+      "id": "bkg_1775812644472",
+      "bookingId": "bkg_1775812644472",
+      "ticketId": "tkt_1775812644472",
+      "userId": "aa26",
+      "movieId": "33a9",
+      "theaterId": "4677",
+      "screen": 1,
+      "date": "2026-05-02",
+      "time": "4:00PM",
+      "seats": [
+        "I6",
+        "I5"
+      ],
+      "totalPrice": 340,
+      "paymentId": "pay_SbjmNlhPwjlOYm",
+      "readableDateTime": "10 Apr 2026, 2:47 pm",
+      "status": "BOOKED"
+    }
+  ],
+  "tickets": [
+    {
+      "id": "tkt_1775811795431",
+      "bookingId": "bkg_1775811795431",
+      "ticketId": "tkt_1775811795431",
+      "movieId": "42e2",
+      "theaterId": "4677",
+      "screen": 1,
+      "date": "2026-04-30",
+      "time": "4:30PM",
+      "seats": [
+        "J6"
+      ],
+      "totalPrice": 170,
+      "paymentId": "pay_SbjXSIkTiZVm7z",
+      "userId": "aa26",
+      "createdAt": "2026-04-10T09:03:15.431Z",
+      "moviePoster": "/images/oppenheimer poster.jpg",
+      "movieTitle": "Oppenheimer",
+      "language": "English",
+      "status": "CANCELLED"
+    },
+    {
+      "id": "tkt_1775812644472",
+      "bookingId": "bkg_1775812644472",
+      "ticketId": "tkt_1775812644472",
+      "movieId": "33a9",
+      "theaterId": "4677",
+      "screen": 1,
+      "date": "2026-05-02",
+      "time": "4:00PM",
+      "seats": [
+        "I6",
+        "I5"
+      ],
+      "totalPrice": 340,
+      "paymentId": "pay_SbjmNlhPwjlOYm",
+      "userId": "aa26",
+      "createdAt": "2026-04-10T09:17:24.472Z",
+      "moviePoster": "/images/intesteller poster.jpg",
+      "movieTitle": "Interstellar",
+      "language": "English",
+      "status": "BOOKED"
+    }
+  ]
 }

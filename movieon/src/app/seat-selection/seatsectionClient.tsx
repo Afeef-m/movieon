@@ -14,7 +14,6 @@ import {
   Theater,
   RazorpayOrderResponse,
   RazorpayCheckoutOptions,
-  RazorpayInstance,
   RazorpaySuccessResponse,
 } from "@/types";
 import { Loader2Icon } from "lucide-react";
@@ -59,7 +58,7 @@ export default function SeatSelectPageClient() {
     if (seatState.selectedSeats.length > 0) {
       localStorage.setItem(
         key,
-        JSON.stringify({ ...seatState, timestamp: Date.now() })
+        JSON.stringify({ ...seatState, timestamp: Date.now() }),
       );
     } else {
       localStorage.removeItem(key);
@@ -119,7 +118,7 @@ export default function SeatSelectPageClient() {
         if (data.selectedSeats?.length) {
           const minutesAgo = Math.floor(selectionAge / 60000);
           toast.success(
-            `${data.selectedSeats.length} seat(s) restored from ${minutesAgo} minute(s) ago`
+            `${data.selectedSeats.length} seat(s) restored from ${minutesAgo} minute(s) ago`,
           );
         }
       }
@@ -130,10 +129,10 @@ export default function SeatSelectPageClient() {
   }, [movieId, theaterId, queryDate, queryTime, queryScreen]);
 
   const theaterMovie = theater?.movies?.find(
-    (m) => String(m.movieId) === String(movieId)
+    (m) => String(m.movieId) === String(movieId),
   );
   const screenObj = theaterMovie?.screens?.find(
-    (s) => s.screen === seatState.selectedScreen
+    (s) => s.screen === seatState.selectedScreen,
   );
   const bookedSeats: string[] =
     screenObj?.seats?.[seatState.selectedDate]?.[seatState.selectedTime] ?? [];
@@ -141,7 +140,7 @@ export default function SeatSelectPageClient() {
   const currentUrl = `${pathname}${search ? "?" + search.toString() : ""}`;
 
   const selectedDay = theaterMovie?.days?.find(
-    (d) => d.date === seatState.selectedDate
+    (d) => d.date === seatState.selectedDate,
   );
 
   const handleProceed = async () => {
@@ -150,6 +149,7 @@ export default function SeatSelectPageClient() {
       router.push(`/auth/login?redirect=${encodeURIComponent(currentUrl)}`);
       return;
     }
+
     if (user.blocked) {
       toast.error("Your account is blocked. Payment is not allowed.");
       return;
@@ -161,14 +161,15 @@ export default function SeatSelectPageClient() {
     }
 
     const alreadyBooked = seatState.selectedSeats.filter((s) =>
-      bookedSeats.includes(s)
+      bookedSeats.includes(s),
     );
+
     if (alreadyBooked.length > 0) {
       toast.error(`Seats ${alreadyBooked.join(", ")} are already booked.`);
       setSeatState((prev) => ({
         ...prev,
         selectedSeats: prev.selectedSeats.filter(
-          (s) => !bookedSeats.includes(s)
+          (s) => !bookedSeats.includes(s),
         ),
       }));
       return;
@@ -186,10 +187,9 @@ export default function SeatSelectPageClient() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: amount * 100, currency: "INR" }),
       });
-
       if (!orderRes.ok) throw new Error("Failed to create order");
-
       const order: RazorpayOrderResponse = await orderRes.json();
+
       toast.dismiss();
 
       const razorpayKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
@@ -202,6 +202,7 @@ export default function SeatSelectPageClient() {
         name: movie?.title || "Movie Booking",
         description: "Movie Ticket Booking",
         order_id: order.id,
+
         handler: async (res: RazorpaySuccessResponse) => {
           try {
             toast.loading("Confirming booking...");
@@ -224,32 +225,32 @@ export default function SeatSelectPageClient() {
                 status: "BOOKED",
               }),
             });
-
-            if (!bookingRes.ok) {
-              const errData = await bookingRes.json();
-              throw new Error(errData.error || "Booking failed");
-            }
-
+            if (!bookingRes.ok) throw new Error("Booking failed");
             const bookingData = await bookingRes.json();
+
             toast.dismiss();
             toast.success("Booking confirmed!");
 
             localStorage.removeItem(`seat-selection:${theaterId}:${movieId}`);
+
             router.push(
-              `/ticket?bookingId=${bookingData.bookingId}&ticketId=${bookingData.ticketId}`
+              `/ticket?bookingId=${bookingData.bookingId}&ticketId=${bookingData.ticketId}`,
             );
-          } catch (err: Error | unknown) {
+          } catch (err: any) {
             console.error(err);
             toast.dismiss();
-            toast.error(err instanceof Error ? err.message : "Booking failed");
+            toast.error(err?.message || "Booking failed");
           }
         },
+
         prefill: {
           name: `${user.firstName} ${user.lastName}`,
           email: user.email,
           contact: user.phone?.toString(),
         },
+
         theme: { color: "#FACC15" },
+
         modal: {
           ondismiss: () => {
             toast.dismiss();
@@ -260,15 +261,15 @@ export default function SeatSelectPageClient() {
       };
 
       if (window.Razorpay) {
-        const razorpay: RazorpayInstance = new window.Razorpay(options);
+        const razorpay = new window.Razorpay(options);
         razorpay.open();
-      } else throw new Error("Razorpay SDK not loaded");
-    } catch (err: Error | unknown) {
+      } else {
+        throw new Error("Razorpay SDK not loaded");
+      }
+    } catch (err: any) {
       console.error(err);
       toast.dismiss();
-      toast.error(
-        err instanceof Error ? err.message : "Payment could not start"
-      );
+      toast.error(err?.message || "Payment could not start");
       setProcessing(false);
     }
   };
@@ -295,11 +296,11 @@ export default function SeatSelectPageClient() {
         <div className="flex gap-3 overflow-x-auto pb-3">
           {theaterMovie?.screens?.flatMap((screen) => {
             const validTimes = screen.showtimes.filter((time) =>
-              selectedDay?.showtimes.includes(time)
+              selectedDay?.showtimes.includes(time),
             );
 
             const sortedTimes = validTimes.sort(
-              (a, b) => timeToMinutes(a) - timeToMinutes(b)
+              (a, b) => timeToMinutes(a) - timeToMinutes(b),
             );
 
             return sortedTimes.map((time) => {
@@ -329,8 +330,8 @@ export default function SeatSelectPageClient() {
               isDisabled
                 ? "border-gray-600 bg-gray-800 text-gray-500 cursor-not-allowed opacity-50"
                 : isActive
-                ? "bg-yellow-500 border-yellow-500 text-black font-bold"
-                : "border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black"
+                  ? "bg-yellow-500 border-yellow-500 text-black font-bold"
+                  : "border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black"
             }
           `}
                 >
@@ -374,53 +375,51 @@ export default function SeatSelectPageClient() {
         </div>
       </div>
 
-     {seatState.selectedDate && seatState.selectedTime && (
-  <div className="max-w-6xl mx-auto mt-6 px-4 sm:px-5 flex flex-col lg:flex-row gap-10">
-    {/* Seat Grid */}
-    <div className="flex-1 w-full">
-      <SeatGrid
-        selectedSeats={seatState.selectedSeats}
-        setSelectedSeats={(seats) =>
-          setSeatState((prev) => ({ ...prev, selectedSeats: seats }))
-        }
-        bookedSeats={bookedSeats}
-        screen={seatState.selectedScreen}
-      />
-    </div>
+      {seatState.selectedDate && seatState.selectedTime && (
+        <div className="max-w-6xl mx-auto mt-6 px-4 sm:px-5 flex flex-col lg:flex-row gap-10">
+          {/* Seat Grid */}
+          <div className="flex-1 w-full">
+            <SeatGrid
+              selectedSeats={seatState.selectedSeats}
+              setSelectedSeats={(seats) =>
+                setSeatState((prev) => ({ ...prev, selectedSeats: seats }))
+              }
+              bookedSeats={bookedSeats}
+              screen={seatState.selectedScreen}
+            />
+          </div>
 
-    {/* Desktop Seat Summary */}
-    <div className="hidden lg:block w-[350px]">
-      <div className="sticky top-28">
-        <SeatSummary
-          movie={movie}
-          selectedSeats={seatState.selectedSeats}
-          selectedDate={seatState.selectedDate}
-          selectedTime={seatState.selectedTime}
-          screen={seatState.selectedScreen}
-          onProceed={handleProceed}
-          processing={processing}
-        />
-      </div>
-    </div>
-  </div>
-)}
-{seatState.selectedDate &&
- seatState.selectedTime &&
- seatState.selectedSeats.length > 0 && (
-
-  <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-gray-900 border-t border-gray-700 p-4">
-    <SeatSummary
-      movie={movie}
-      selectedSeats={seatState.selectedSeats}
-      selectedDate={seatState.selectedDate}
-      selectedTime={seatState.selectedTime}
-      screen={seatState.selectedScreen}
-      onProceed={handleProceed}
-      processing={processing}
-    />
-  </div>
-)}
-
+          {/* Desktop Seat Summary */}
+          <div className="hidden lg:block w-[350px]">
+            <div className="sticky top-28">
+              <SeatSummary
+                movie={movie}
+                selectedSeats={seatState.selectedSeats}
+                selectedDate={seatState.selectedDate}
+                selectedTime={seatState.selectedTime}
+                screen={seatState.selectedScreen}
+                onProceed={handleProceed}
+                processing={processing}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+      {seatState.selectedDate &&
+        seatState.selectedTime &&
+        seatState.selectedSeats.length > 0 && (
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-gray-900 border-t border-gray-700 p-4">
+            <SeatSummary
+              movie={movie}
+              selectedSeats={seatState.selectedSeats}
+              selectedDate={seatState.selectedDate}
+              selectedTime={seatState.selectedTime}
+              screen={seatState.selectedScreen}
+              onProceed={handleProceed}
+              processing={processing}
+            />
+          </div>
+        )}
     </div>
   );
 }
