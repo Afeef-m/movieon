@@ -30,7 +30,7 @@ export default function MovieCard({ movie }: Props) {
           fill
           sizes="(max-width: 768px) 50vw, 25vw"
           placeholder="blur"
-          blurDataURL="/placeholder.jpg"
+          blurDataURL="/placeholder.png"
           className={`object-cover transition-all duration-300
             ${isUpcoming ? "" : "group-hover:scale-105 group-hover:brightness-110"}
           `}
