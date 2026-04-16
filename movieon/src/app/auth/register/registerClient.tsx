@@ -18,42 +18,28 @@ export default function RegisterPageClient() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
+ const handleRegister = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError("");
 
-    if (!form.firstName || !form.email || !form.password) {
-      setError("Fill the required field");
-      return;
-    }
+  if (!form.firstName || !form.email || !form.password) {
+    setError("Fill the required fields");
+    return;
+  }
 
-    if (!/^[a-zA-Z0-9._%+-]+@gmail.com$/.test(form.email)) {
-      setError("Invalid email format");
-      return;
-    }
+  try {
+    await api.post("/auth/register", {
+      firstName: form.firstName,
+      email: form.email,
+      password: form.password,
+    });
 
-    if (!/^(?=.*[A-Za-z])(?=.*\d).{4,}$/.test(form.password)) {
-      setError("Password must have letters , numbers and at least 4 characters");
-      return;
-    }
+    router.push("/auth/login?registered=1");
 
-    try {
-      const existing = await api.get(`/users?email=${form.email}`);
-      if (existing.data.length > 0) {
-        setError("Email already exists");
-        return;
-      }
-
-      await api.post("/users", {
-        ...form,
-        role: "user",
-      });
-
-      router.push("/auth/login?registered=1");
-    } catch {
-      setError("Registration failed");
-    }
-  };
+  } catch (err: any) {
+    setError(err?.response?.data?.message || "Registration failed");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white px-6">

@@ -40,57 +40,41 @@ export default function LoginPageClient() {
     }
   }, [isAuthenticated, user, redirect, router]);
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+ const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError("");
+  setLoading(true);
 
-    if (!form.email || !form.password) {
-      setError("Email and password are required");
-      setLoading(false);
-      return;
-    }
+  if (!form.email || !form.password) {
+    setError("Email and password are required");
+    setLoading(false);
+    return;
+  }
 
-    try {
-      const res = await api.get(`/users?email=${form.email}`);
-      const found = res.data[0];
+  try {
+    const res = await api.post("/auth/login", {
+      email: form.email,
+      password: form.password,
+    });
 
-      if (!found) {
-        setError("Invalid email or password");
-        setLoading(false);
-        return;
-      }
+    const { token } = res.data;
 
-      if (found.status === "blocked" || found.blocked) {
-        setError("Your account has been blocked.");
-        setLoading(false);
-        return;
-      }
+    // ✅ store token
+    localStorage.setItem("token", token);
 
-      if (found.password !== form.password) {
-        setError("Invalid email or password");
-        setLoading(false);
-        return;
-      }
+    // OPTIONAL: decode or fetch user later
+    login({ token });
 
-      login(found);
+    toast.success("Login successful!");
 
-      toast.success("Login successful!");
+    router.push(redirect);
 
-      if (found.role === "admin") {
-        router.push("/admin/admin-dashboard");
-      } else if (found.role === "manager") {
-        router.push("/managers/manager-dashboard");
-      } else {
-        router.push(redirect);
-      }
-    } catch {
-      setError("Login failed. Try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  } catch (err: any) {
+    setError(err?.response?.data?.message || "Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white px-6">
       <div className="w-full max-w-md bg-slate-900 p-8 rounded-xl shadow-xl">

@@ -25,17 +25,34 @@ export default function TheaterList({
   return (
     <div className="space-y-4">
       {theaters.map((theater) => {
-        const movieData = theater.movies.find(
-          (m) => String(m.movieId) === String(movieId)
-        );
+        const shows = theater.shows?.filter((s: any) => {
+          const movieRef =
+            typeof s.movieId === "object" ? s.movieId._id : s.movieId;
 
-        if (!movieData) return null;
-        const validDays = movieData.days.filter((day) => !isPastDate(day.date));
-        const dayData = validDays.find((d) => d.date === selectedDate);
-        if (!dayData)
+          return String(movieRef) === String(movieId);
+        });
+
+        if (!shows || shows.length === 0) return null;
+
+        // group shows by date
+        const groupedByDate = shows.reduce((acc: any, show: any) => {
+          const date = show.showDate.split("T")[0];
+
+          if (!acc[date]) acc[date] = [];
+          acc[date].push(show);
+
+          return acc;
+        }, {});
+
+        // remove past dates
+        const validDates = Object.keys(groupedByDate).filter(
+          (date) => !isPastDate(date),
+        );
+        const dayShows = groupedByDate[selectedDate];
+        if (!dayShows)
           return (
             <div
-              key={theater.id}
+              key={theater._id}
               className="bg-gray-900 p-4 rounded-lg border border-gray-700"
             >
               <h2 className="text-xl text-white font-semibold">
@@ -50,7 +67,7 @@ export default function TheaterList({
 
         return (
           <div
-            key={theater.id}
+            key={theater._id}
             className="bg-[#0f0f0f] p-5 rounded-xl border border-gray-800 shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <div className="flex items-center justify-between">
@@ -73,80 +90,41 @@ export default function TheaterList({
               </div>
             </div>
 
-            <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-              {movieData.screens.map((screen) => {
-                const validTimes = screen.showtimes
-                  .filter((time) => dayData.showtimes.includes(time))
-                  .sort((a, b) => timeToMinutes(a) - timeToMinutes(b));
+           <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+  {dayShows?.map((show: any) => {
+    const time = show.showTime;
+    const screenNumber = show.screenId?.screenNumber;
+    const screenId = show.screenId?._id;
 
-                return validTimes.map((time) => {
-                  const isPastTime = isPastTimeToday(selectedDate, time);
-                  const status = getShowtimeStatus(
-                    theater,
-                    movieId,
-                    screen.screen,
-                    selectedDate,
-                    time
-                  );
+    const isPast = isPastTimeToday(selectedDate, time);
 
-                  const statusClass: Record<string, string> = {
-                    AVAILABLE:
-                      "border-green-600 text-green-400 hover:bg-green-900/20",
-                    "FAST FILLING":
-                      "border-orange-500 text-orange-400 hover:bg-orange-900/20",
-                    "ALMOST FULL":
-                      "border-red-600 text-red-400 hover:bg-red-900/20",
-                    "SOLD OUT":
-                      "border-gray-600 text-gray-500 bg-gray-800 cursor-not-allowed",
-                  };
-
-                  return (
-                    <div
-                      key={`${screen.screen}-${time}`}
-                      className="relative group"
-                    >
-                      <button
-                        disabled={status === "SOLD OUT" || isPastTime}
-                        onClick={() => {
-                          if (status !== "SOLD OUT" && !isPastTime) {
-                            onSelectTheater(String(theater.id));
-                            onSelectShowtime(time, screen.screen, theater.id);
-                          }
-                        }}
-                        className={`px-3 py-2 rounded-lg border bg-gray-900 transition-all duration-200 text-sm w-full
-                          ${
-                            isPastTime
-                              ? "border-gray-700 text-gray-500 bg-gray-800 cursor-not-allowed"
-                              : statusClass[status]
-                          }
-                            `}
-                      >
-                        <div className="font-semibold">{time}</div>
-                        <div className="text-[10px] opacity-60">
-                          Screen {screen.screen}
-                        </div>
-                      </button>
-
-                      <div
-                        className="
-      absolute left-1/2 -translate-x-1/2 -bottom-11
-      bg-black text-white text-xs px-2 py-1 rounded-md
-      opacity-0 group-hover:opacity-100 transition-all
-      pointer-events-none whitespace-nowrap border border-gray-700
-    "
-                      >
-                        <div>{status}</div>
-                        {isPastTime && (
-                          <div className="text-[10px] text-gray-400">
-                            Showtime Passed
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                });
-              })}
-            </div>
+    return (
+      <div key={show._id} className="relative group">
+        <button
+          disabled={isPast}
+          onClick={() => {
+            if (!isPast) {
+              onSelectTheater(String(theater._id));
+              onSelectShowtime(time, screenId, theater._id);
+            }
+          }}
+          className={`px-3 py-2 rounded-lg border bg-gray-900 transition-all duration-200 text-sm w-full
+            ${
+              isPast
+                ? "border-gray-700 text-gray-500 bg-gray-800 cursor-not-allowed"
+                : "border-green-600 text-green-400 hover:bg-green-900/20"
+            }
+          `}
+        >
+          <div className="font-semibold">{time}</div>
+          <div className="text-[10px] opacity-60">
+            Screen {screenNumber}
+          </div>
+        </button>
+      </div>
+    );
+  })}
+</div>
           </div>
         );
       })}

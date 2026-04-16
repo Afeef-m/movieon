@@ -38,7 +38,7 @@ export default function MovieDetails() {
     <div className="w-full min-h-screen bg-gradient-to-b from-gray-900 via-black to-black text-white">
       <div className="relative w-full h-[450px] md:h-[600px] overflow-hidden">
              <Image
-          src={movie.banner}
+          src={movie.banner || "/banner.jpg"}
           alt={movie.title}
           fill
           className="w-full h-full object-cover"
@@ -52,7 +52,7 @@ export default function MovieDetails() {
           <div className="flex-shrink-0 flex justify-center lg:justify-start">
             <div className="relative group">
             <Image
-              src={movie.poster}
+              src={movie.poster || "/placeholder.png"}
               alt={movie.title}
               width={300}
               height={450}
@@ -92,7 +92,7 @@ export default function MovieDetails() {
             </div>
 
             <button
-             onClick={() => router.push(`/theater/${movie.id}`)}
+             onClick={() => router.push(`/theater/${movie._id}`)}
               className="group relative px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold rounded-xl shadow-lg shadow-red-500/50 hover:shadow-red-500/70 hover:scale-[1.02] transition-all duration-300 overflow-hidden"
             >
               <span className="relative z-10">Book Tickets Now</span>
@@ -141,7 +141,7 @@ export default function MovieDetails() {
       </div>
       <div className="hidden lg:block fixed bottom-8 right-8 z-50">
         <button
-         onClick={() => router.push(`/theater/${movie.id}`)}
+         onClick={() => router.push(`/theater/${movie._id}`)}
           className="group relative px-8 py-4 bg-black/90 backdrop-blur-xl border border-white/20 text-white font-semibold rounded-xl shadow-2xl hover:shadow-red-500/30 transition-all duration-300 overflow-hidden"
         >
           <span className="relative z-10">Book Tickets</span>

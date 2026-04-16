@@ -31,7 +31,7 @@ export default function AddCast({ movie, onClose, onSuccess }: Props) {
     };
 
     try {
-      await api.put(`/movies/${movie.id}`, updatedMovie);
+      await api.put(`/movies/${movie._id}`, updatedMovie);
       toast.success("Cast added!");
       onSuccess();
     } catch {

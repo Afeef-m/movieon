@@ -46,7 +46,7 @@ export default function EditCast({ movie, cast, onClose, onSuccess }: Props) {
     };
 
     try {
-      await api.put(`/movies/${movie.id}`, updatedMovie);
+      await api.put(`/movies/${movie._id}`, updatedMovie);
       toast.success("Cast updated!");
       onSuccess();
     } catch {

@@ -86,7 +86,7 @@ export default function MovieTable() {
 
   const handleUpsertSuccess = (movie: Movie, isEdit: boolean) => {
     if (isEdit) {
-      setMovies((prev) => prev.map((m) => (m.id === movie.id ? movie : m)));
+      setMovies((prev) => prev.map((m) => (m._id === movie._id ? movie : m)));
     } else {
       setMovies((prev) => [movie, ...prev]);
     }
@@ -131,7 +131,7 @@ export default function MovieTable() {
     );
 
     try {
-      await api.patch(`/movies/${selectedMovie.id}`, { cast: updatedCast });
+      await api.patch(`/movies/${selectedMovie._id}`, { cast: updatedCast });
       fetchMovies();
     } catch (err) {
       console.error("Cast delete failed:", err);
@@ -246,12 +246,12 @@ export default function MovieTable() {
               <tbody>
                 {filteredMovies.map((m) => (
                   <tr
-                    key={m.id}
+                    key={m._id}
                     className={`text-center border-b border-zinc-800 ${
                       m.status === "UPCOMING" ? "bg-zinc-800/60" : ""
                     }`}
                   >
-                    <td className="p-3">{m.id}</td>
+                    <td className="p-3">{m._id}</td>
                     <td className="p-3">
                       <div className="relative w-16 h-16 rounded-lg overflow-hidden">
                         <Image
@@ -336,7 +336,7 @@ export default function MovieTable() {
 
           {filteredMoviesForCast.map((movie) => (
             <div
-              key={movie.id}
+              key={movie._id}
               className="border border-zinc-700 rounded-lg p-4"
             >
               <div className="flex items-center justify-between mb-4">

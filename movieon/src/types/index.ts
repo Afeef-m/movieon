@@ -57,7 +57,7 @@ export interface MovieSeats {
 }
 
 export interface Movie {
-  id: string;
+  _id: string;
   title: string;
   rating: number;
   poster: string;
@@ -102,7 +102,7 @@ export interface TheaterMovie {
 }
 
 export interface Theater {
-  id: string;
+  _id: string;
   managerId:string;
   movieId: string; 
   theaterId:string;

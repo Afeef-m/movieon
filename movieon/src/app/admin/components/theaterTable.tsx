@@ -104,7 +104,7 @@ export default function TheaterTable() {
   const handleAssignedLocally = (theaterId: string, newMovie: TheaterMovie) => {
     setTheaters((prev) =>
       prev.map((t) =>
-        t.id === theaterId
+        t._id === theaterId
           ? { ...t, movies: [...(t.movies ?? []), newMovie] }
           : t
       )

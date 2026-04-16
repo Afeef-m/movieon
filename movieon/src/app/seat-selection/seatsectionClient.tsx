@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import axios from "@/app/lib/axios";
 import SeatGrid from "./seatGrid";
 import SeatSummary from "./seatSummary";
 import SeatHeader from "./seatHeader";
@@ -18,6 +17,7 @@ import {
 } from "@/types";
 import { Loader2Icon } from "lucide-react";
 import { isPastTimeToday, isPastDate, timeToMinutes } from "@/utils/dateTime";
+import api from "@/app/lib/axios";
 
 interface SeatState {
   selectedSeats: string[];
@@ -71,8 +71,8 @@ export default function SeatSelectPageClient() {
     const fetchData = async () => {
       try {
         const [movieRes, theaterRes] = await Promise.all([
-          axios.get(`/movies/${movieId}`),
-          axios.get(`/theaters/${theaterId}`),
+          api.get(`/movies/${movieId}`),
+api.get(`/theaters/${theaterId}`),
         ]);
         setMovie(movieRes.data);
         setTheater(theaterRes.data);

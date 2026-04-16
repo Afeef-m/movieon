@@ -22,48 +22,70 @@ export default function TheaterPage() {
     null
   );
 
-  useEffect(() => {
-    Promise.all([api.get("/theaters"), api.get("/movies")])
-      .then(([theatersRes, moviesRes]) => {
-        const matchedTheaters = theatersRes.data.filter((t: Theater) =>
-          t.movies.some((m) => m.movieId === movieId)
-        );
+ useEffect(() => {
+  Promise.all([api.get("/shows"), api.get("/movies")])
+    .then(([showsRes, moviesRes]) => {
 
-        setTheaters(matchedTheaters);
+      const shows = showsRes.data;
 
-        const foundMovie = moviesRes.data.find((m: Movie) => m.id === movieId);
-        setMovie(foundMovie || null);
+      const filteredShows = shows.filter((s: any) => {
+  const movieRef =
+    typeof s.movieId === "object" ? s.movieId._id : s.movieId;
 
-        const firstTheater = matchedTheaters[0];
-        const movieEntry = firstTheater?.movies.find(
-          (m: TheaterMovie) => m.movieId === movieId
-        );
+  return movieRef === movieId;
+});
 
-        const defaultDate = movieEntry?.days?.[0]?.date;
+      const theaterMap = new Map();
 
-        if (defaultDate) {
-          setSelectedDate(defaultDate);
-          setSelectedTheaterId(firstTheater.id);
+      filteredShows.forEach((show: any) => {
+        const theater = show.theaterId;
+
+        if (!theaterMap.has(theater._id)) {
+          theaterMap.set(theater._id, {
+            ...theater,
+            shows: []
+          });
         }
-        if (matchedTheaters.length === 0) {
-          setLoading(false);
-          return;
-        }
-      })
-      .finally(() => setLoading(false));
-  }, [movieId]);
 
-  const handleTheaterSelect = (id: string) => {
-    setSelectedTheaterId(id);
+        theaterMap.get(theater._id).shows.push(show);
+      });
 
-    const theater = theaters.find((t) => t.id === id);
-    const movieEntry = theater?.movies.find((m) => m.movieId === movieId);
+      const finalTheaters = Array.from(theaterMap.values());
 
-    const firstDate = movieEntry?.days?.[0]?.date;
-    if (firstDate) {
-      setSelectedDate(firstDate);
-    }
-  };
+      setTheaters(finalTheaters);
+
+      const foundMovie = moviesRes.data.find(
+        (m: Movie) => m._id === movieId
+      );
+
+      setMovie(foundMovie || null);
+
+     if (finalTheaters.length > 0) {
+  const firstShow = finalTheaters[0]?.shows?.[0];
+
+  if (firstShow) {
+    // normalize date
+    const dateOnly = firstShow.showDate.split("T")[0];
+    setSelectedDate(dateOnly);
+    setSelectedTheaterId(finalTheaters[0]._id);
+  }
+}
+
+    })
+    .finally(() => setLoading(false));
+}, [movieId]);
+
+const handleTheaterSelect = (id: string) => {
+  setSelectedTheaterId(id);
+
+  const theater = theaters.find((t) => t._id === id);
+  const firstShow = theater?.shows?.[0];
+
+  if (firstShow) {
+    const dateOnly = firstShow.showDate.split("T")[0];
+    setSelectedDate(dateOnly);
+  }
+};
 
   const handleShowtimeSelect = (
     time: string,
@@ -90,10 +112,9 @@ export default function TheaterPage() {
       </div>
     );
 
- const convertedDays = theaters.flatMap((theater) => {
-  const movieEntry = theater.movies.find((m) => m.movieId === movieId);
-  return movieEntry?.days ?? [];
-});
+const convertedDays = theaters.flatMap((theater: any) =>
+  theater.shows.map((show: any) => show.showDate)
+);
 
 
   return (

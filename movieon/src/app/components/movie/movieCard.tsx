@@ -14,7 +14,7 @@ export default function MovieCard({ movie }: Props) {
 
   return (
     <Link
-  href={isUpcoming ? `/movie/upcoming/${movie.id}` : `/movie/${movie.id}`}
+  href={isUpcoming ? `/movie/upcoming/${movie._id}` : `/movie/${movie._id}`}
   className="group relative rounded-xl overflow-hidden 
     border border-white/20 shadow-lg transition-transform duration-300 block
     
@@ -25,7 +25,7 @@ export default function MovieCard({ movie }: Props) {
       {/* Poster */}
       <div className="relative w-full h-80 overflow-hidden">
         <Image
-          src={movie.poster}
+           src={movie.poster || "/placeholder.png"}
           alt={movie.title}
           fill
           sizes="(max-width: 768px) 50vw, 25vw"
